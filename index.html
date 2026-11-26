@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ruang Karya Siswa</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#eef5ff;--surface:#fff;--ink:#0b2447;--muted:#5a6f94;--blue:#1769e0;--blue2:#0a4bb3;--line:#d3e2fa;--soft:#e3eeff;--err:#c62828;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#081428;--surface:#0f2140;--ink:#eaf2ff;--muted:#9bb2d6;--blue:#4b93ff;--blue2:#2f78e6;--line:#1f3a66;--soft:#16305a;--err:#ff7a7a}}
+:root[data-theme="dark"]{--bg:#081428;--surface:#0f2140;--ink:#eaf2ff;--muted:#9bb2d6;--blue:#4b93ff;--blue2:#2f78e6;--line:#1f3a66;--soft:#16305a;--err:#ff7a7a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-tap-highlight-color:transparent;min-height:100vh}
+button,input,textarea{font:inherit;color:inherit}
+.hidden{display:none!important}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+
+/* LOGIN */
+#auth{min-height:100vh;display:grid;place-items:center;padding:20px;position:relative;overflow:hidden;
+background:linear-gradient(160deg,#1769e0 0%,#0a4bb3 45%,#eef5ff 45.1%)}
+@media (prefers-color-scheme:dark){#auth{background:linear-gradient(160deg,#0a4bb3 0%,#0b2447 45%,#081428 45.1%)}}
+.card{background:var(--surface);width:100%;max-width:400px;border-radius:24px;padding:28px 24px;box-shadow:0 20px 50px rgba(10,50,120,.25);position:relative;z-index:2}
+.logo{width:52px;height:52px;border-radius:16px;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:26px;margin-bottom:14px}
+h1{font-size:1.6rem;margin:0 0 4px;font-weight:800}
+.sub{color:var(--muted);margin:0 0 20px;font-size:.95rem}
+.tabs{display:flex;background:var(--soft);border-radius:14px;padding:4px;margin-bottom:18px}
+.tabs button{flex:1;border:0;background:none;padding:10px;border-radius:11px;font-weight:600;cursor:pointer;color:var(--muted)}
+.tabs button.on{background:var(--surface);color:var(--blue);box-shadow:0 2px 8px rgba(10,50,120,.12)}
+label{display:block;font-weight:600;font-size:.88rem;margin:0 0 6px}
+.field{margin-bottom:14px;position:relative}
+input[type=text],input[type=password],textarea{width:100%;border:1.5px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 14px;font-size:1rem}
+input:focus,textarea:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 3px rgba(23,105,224,.2)}
+.eye{position:absolute;right:6px;top:30px;border:0;background:none;padding:8px;cursor:pointer;font-size:1.1rem}
+.btn{position:relative;overflow:hidden;width:100%;border:0;background:var(--blue);color:#fff;font-weight:800;padding:14px;border-radius:14px;font-size:1rem;cursor:pointer;transition:transform .12s,background .2s}
+.btn:hover{background:var(--blue2)}
+.btn:active{transform:scale(.97)}
+.btn.sm{width:auto;padding:10px 18px}
+.btn.ghost{background:var(--soft);color:var(--blue)}
+.msg{min-height:20px;font-size:.88rem;color:var(--err);margin:0 0 10px}
+.msg.ok{color:var(--blue)}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.55);transform:scale(0);animation:rp .6s ease-out forwards;pointer-events:none}
+@keyframes rp{to{transform:scale(4);opacity:0}}
+.touch-dot{position:fixed;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;border:3px solid #fff;background:rgba(23,105,224,.25);pointer-events:none;z-index:50;animation:td .55s ease-out forwards}
+@keyframes td{from{transform:scale(.3);opacity:1}to{transform:scale(1.6);opacity:0}}
+.shake{animation:sh .4s}
+@keyframes sh{20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+
+/* APP */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:12px 16px;gap:10px}
+header b{font-weight:800;color:var(--blue)}
+header .who{font-size:.85rem;color:var(--muted)}
+nav{display:flex;gap:6px;padding:12px 16px 0;max-width:900px;margin:0 auto}
+nav button{flex:1;border:1.5px solid var(--line);background:var(--surface);padding:11px 8px;border-radius:12px;font-weight:600;cursor:pointer;color:var(--muted)}
+nav button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+main{max-width:900px;margin:0 auto;padding:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:16px}
+.panel h2{margin:0 0 4px;font-size:1.2rem}
+.drop{border:2px dashed var(--blue);background:var(--soft);border-radius:16px;padding:26px 14px;text-align:center;cursor:pointer;margin:14px 0}
+.drop.over{background:var(--line)}
+.drop p{margin:6px 0 0;color:var(--muted);font-size:.9rem}
+.preview{width:100%;max-height:300px;object-fit:cover;border-radius:14px;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.grid img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px;display:block}
+.item{position:relative}
+.del{position:absolute;top:6px;right:6px;border:0;background:rgba(11,36,71,.75);color:#fff;border-radius:50%;width:30px;height:30px;cursor:pointer}
+.works{display:grid;gap:14px}
+.work{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.work img{width:100%;max-height:320px;object-fit:cover;display:block}
+.work .body{padding:14px 16px}
+.work h3{margin:0 0 6px;font-size:1.05rem}
+.work p{margin:0 0 10px;white-space:pre-wrap;line-height:1.5}
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--muted)}
+.like{border:1.5px solid var(--line);background:var(--bg);border-radius:20px;padding:6px 12px;cursor:pointer}
+.like.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.empty{text-align:center;color:var(--muted);padding:24px 10px}
+.toolbar{display:flex;gap:8px;margin-bottom:10px}
+.toolbar button{flex:1}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<section id="auth">
+  <div class="card" id="authCard">
+    <div class="logo">🎓</div>
+    <h1>Ruang Karya Siswa</h1>
+    <p class="sub">Masuk untuk membagikan foto dan ide kamu.</p>
+    <div class="tabs" role="tablist">
+      <button id="tabLogin" class="on" type="button">Masuk</button>
+      <button id="tabSignup" type="button">Daftar</button>
+    </div>
+    <div class="field hidden" id="nameField">
+      <label for="fullname">Nama lengkap</label>
+      <input type="text" id="fullname" autocomplete="name" placeholder="Contoh: Rina Putri">
+    </div>
+    <div class="field">
+      <label for="username">Username</label>
+      <input type="text" id="username" autocomplete="username" autocapitalize="none" placeholder="rina123">
+    </div>
+    <div class="field">
+      <label for="password">Kata sandi</label>
+      <input type="password" id="password" autocomplete="current-password" placeholder="Minimal 6 karakter">
+      <button class="eye" id="eye" type="button" aria-label="Tampilkan kata sandi">👁️</button>
+    </div>
+    <p class="msg" id="authMsg" role="alert"></p>
+    <button class="btn" id="authBtn" type="button">Masuk</button>
+  </div>
+</section>
+
+<!-- APP -->
+<section id="app" class="hidden">
+  <header>
+    <b>🎓 Ruang Karya</b>
+    <span class="who" id="who"></span>
+    <button class="btn ghost sm" id="logout" type="button">Keluar</button>
+  </header>
+  <nav>
+    <button data-tab="photos" class="on" type="button">📷 Unggah Foto</button>
+    <button data-tab="works" type="button">🌟 Karya Siswa</button>
+  </nav>
+  <main>
+    <!-- Foto -->
+    <div id="tab-photos">
+      <div class="panel">
+        <h2>Unggah foto</h2>
+        <div class="sub" style="margin:0">Ketuk kotak di bawah atau seret foto ke sini.</div>
+        <div class="drop" id="drop1" tabindex="0" role="button">
+          <div style="font-size:2rem">🖼️</div>
+          <b>Pilih foto</b>
+          <p>JPG, PNG, atau WEBP</p>
+        </div>
+        <input type="file" id="file1" accept="image/*" multiple hidden>
+        <p class="msg" id="photoMsg"></p>
+      </div>
+      <div class="panel">
+        <h2>Galeri saya</h2>
+        <div class="grid" id="gallery"></div>
+      </div>
+    </div>
+
+    <!-- Karya -->
+    <div class="hidden" id="tab-works">
+      <div class="panel">
+        <h2>Bagikan karya atau ide</h2>
+        <div class="sub" style="margin:0 0 12px">Unggah foto, tulis ide, atau keduanya.</div>
+        <div class="field"><label for="wTitle">Judul</label><input type="text" id="wTitle" maxlength="80" placeholder="Judul karya atau ide"></div>
+        <div class="field"><label for="wText">Ide / deskripsi</label><textarea id="wText" rows="4" maxlength="800" placeholder="Ceritakan idemu di sini..."></textarea></div>
+        <img class="preview hidden" id="wPrev" alt="Pratinjau foto karya">
+        <div class="toolbar">
+          <button class="btn ghost" id="wPick" type="button">📷 Tambah foto</button>
+          <button class="btn" id="wPost" type="button">Kirim karya</button>
+        </div>
+        <input type="file" id="file2" accept="image/*" hidden>
+        <p class="msg" id="workMsg"></p>
+      </div>
+      <div class="works" id="workList"></div>
+    </div>
+  </main>
+</section>
+
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const store={
+  get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
+};
+let mode='login', me=null;
+
+/* ===== Sentuhan layar: ripple + titik sentuh ===== */
+function ripple(el,e){
+  const r=el.getBoundingClientRect(), s=Math.max(r.width,r.height);
+  const d=document.createElement('span'); d.className='ripple';
+  d.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;
+  el.appendChild(d); setTimeout(()=>d.remove(),650);
+}
+document.addEventListener('pointerdown',e=>{
+  const b=e.target.closest('.btn'); if(b) ripple(b,e);
+  if(!$('auth').classList.contains('hidden')){
+    const t=document.createElement('div'); t.className='touch-dot';
+    t.style.left=e.clientX+'px'; t.style.top=e.clientY+'px';
+    document.body.appendChild(t); setTimeout(()=>t.remove(),600);
+  }
+});
+
+/* ===== Auth ===== */
+async function hash(s){
+  try{
+    const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('rks:'+s));
+    return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
+  }catch(e){return btoa(unescape(encodeURIComponent('rks:'+s)))}
+}
+function setMode(m){
+  mode=m;
+  $('tabLogin').classList.toggle('on',m==='login');
+  $('tabSignup').classList.toggle('on',m==='signup');
+  $('nameField').classList.toggle('hidden',m==='login');
+  $('authBtn').firstChild.nodeValue=m==='login'?'Masuk':'Buat akun';
+  $('password').autocomplete=m==='login'?'current-password':'new-password';
+  $('authMsg').textContent='';
+}
+function authErr(t){
+  const m=$('authMsg'); m.className='msg'; m.textContent=t;
+  const c=$('authCard'); c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake');
+}
+async function submitAuth(){
+  const u=$('username').value.trim().toLowerCase(), p=$('password').value, n=$('fullname').value.trim();
+  if(!u||!p) return authErr('Isi username dan kata sandi.');
+  if(!/^[a-z0-9_.]{3,20}$/.test(u)) return authErr('Username 3–20 karakter: huruf, angka, titik, atau _.');
+  const users=store.get('rks_users',{});
+  const h=await hash(p);
+  if(mode==='signup'){
+    if(!n) return authErr('Isi nama lengkap.');
+    if(p.length<6) return authErr('Kata sandi minimal 6 karakter.');
+    if(users[u]) return authErr('Username sudah dipakai. Coba yang lain.');
+    users[u]={name:n,pw:h};
+    if(!store.set('rks_users',users)) return authErr('Penyimpanan penuh atau diblokir browser.');
+    $('authMsg').className='msg ok'; $('authMsg').textContent='Akun dibuat! Masuk…';
+  } else {
+    if(!users[u]||users[u].pw!==h) return authErr('Username atau kata sandi salah.');
+  }
+  store.set('rks_session',u);
+  enter(u,users[u].name);
+}
+function enter(u,name){
+  me={u,name};
+  $('auth').classList.add('hidden'); $('app').classList.remove('hidden');
+  $('who').textContent='Halo, '+name.split(' ')[0];
+  renderGallery(); renderWorks(); window.scrollTo(0,0);
+}
+function logout(){
+  try{localStorage.removeItem('rks_session')}catch(e){}
+  me=null; $('app').classList.add('hidden'); $('auth').classList.remove('hidden');
+  $('password').value=''; setMode('login');
+}
+$('tabLogin').onclick=()=>setMode('login');
+$('tabSignup').onclick=()=>setMode('signup');
+$('authBtn').onclick=submitAuth;
+$('authCard').addEventListener('keydown',e=>{if(e.key==='Enter')submitAuth()});
+$('eye').onclick=()=>{const p=$('password');const s=p.type==='password';p.type=s?'text':'password';$('eye').textContent=s?'🙈':'👁️'};
+$('logout').onclick=logout;
+
+/* ===== Tab ===== */
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));
+  $('tab-photos').classList.toggle('hidden',b.dataset.tab!=='photos');
+  $('tab-works').classList.toggle('hidden',b.dataset.tab!=='works');
+});
+
+/* ===== Foto: kompres agar muat di penyimpanan ===== */
+function compress(file,max=900){
+  return new Promise((res,rej)=>{
+    const fr=new FileReader();
+    fr.onerror=()=>rej();
+    fr.onload=()=>{
+      const img=new Image();
+      img.onerror=()=>rej();
+      img.onload=()=>{
+        const k=Math.min(1,max/Math.max(img.width,img.height));
+        const c=document.createElement('canvas');
+        c.width=Math.round(img.width*k); c.height=Math.round(img.height*k);
+        c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+        res(c.toDataURL('image/jpeg',.78));
+      };
+      img.src=fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* Galeri */
+const photoKey=()=>'rks_photos_'+me.u;
+function renderGallery(){
+  const list=store.get(photoKey(),[]), g=$('gallery');
+  if(!list.length){g.innerHTML='<div class="empty" style="grid-column:1/-1">Belum ada foto. Ketuk kotak unggah di atas.</div>';return}
+  g.innerHTML=list.map((p,i)=>`<div class="item"><img src="${p}" alt="Foto ${i+1}"><button class="del" data-i="${i}" aria-label="Hapus foto">✕</button></div>`).join('');
+  g.querySelectorAll('.del').forEach(b=>b.onclick=()=>{
+    const l=store.get(photoKey(),[]); l.splice(+b.dataset.i,1); store.set(photoKey(),l); renderGallery();
+  });
+}
+async function addPhotos(files){
+  const m=$('photoMsg'); m.className='msg'; m.textContent='';
+  const list=store.get(photoKey(),[]); let n=0;
+  for(const f of files){
+    if(!f.type.startsWith('image/')) continue;
+    try{list.unshift(await compress(f)); n++}catch(e){}
+  }
+  if(!n){m.textContent='Pilih file gambar (JPG, PNG, atau WEBP).';return}
+  if(!store.set(photoKey(),list)){m.textContent='Penyimpanan penuh. Hapus beberapa foto lama.';return}
+  m.className='msg ok'; m.textContent=n+' foto berhasil diunggah.'; renderGallery();
+}
+const d1=$('drop1');
+d1.onclick=()=>$('file1').click();
+d1.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('file1').click()}};
+$('file1').onchange=e=>{addPhotos(e.target.files);e.target.value=''};
+['dragover','dragenter'].forEach(ev=>d1.addEventListener(ev,e=>{e.preventDefault();d1.classList.add('over')}));
+['dragleave','drop'].forEach(ev=>d1.addEventListener(ev,e=>{e.preventDefault();d1.classList.remove('over')}));
+d1.addEventListener('drop',e=>addPhotos(e.dataTransfer.files));
+
+/* ===== Karya siswa (dibagikan antar akun di perangkat ini) ===== */
+let workImg=null;
+$('wPick').onclick=()=>$('file2').click();
+$('file2').onchange=async e=>{
+  const f=e.target.files[0]; e.target.value=''; if(!f) return;
+  try{workImg=await compress(f,1000); $('wPrev').src=workImg; $('wPrev').classList.remove('hidden')}
+  catch(err){$('workMsg').className='msg'; $('workMsg').textContent='Gagal membaca gambar.'}
+};
+$('wPost').onclick=()=>{
+  const m=$('workMsg'); m.className='msg';
+  const t=$('wTitle').value.trim(), x=$('wText').value.trim();
+  if(!t) return m.textContent='Isi judul dulu.';
+  if(!x&&!workImg) return m.textContent='Tambahkan foto atau tulis idemu.';
+  const w=store.get('rks_works',[]);
+  w.unshift({id:Date.now(),u:me.u,name:me.name,title:t,text:x,img:workImg,at:Date.now(),likes:[]});
+  if(!store.set('rks_works',w)) return m.textContent='Penyimpanan penuh. Coba foto lebih kecil atau hapus karya lama.';
+  $('wTitle').value='';$('wText').value='';workImg=null;$('wPrev').classList.add('hidden');
+  m.className='msg ok'; m.textContent='Karya terkirim!'; renderWorks();
+};
+function renderWorks(){
+  const w=store.get('rks_works',[]), L=$('workList');
+  if(!w.length){L.innerHTML='<div class="panel empty">Belum ada karya. Jadilah yang pertama berbagi!</div>';return}
+  L.innerHTML=w.map(k=>{
+    const liked=k.likes.includes(me.u), date=new Date(k.at).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
+    return `<article class="work">${k.img?`<img src="${k.img}" alt="${esc(k.title)}">`:''}
+    <div class="body"><h3>${esc(k.title)}</h3>${k.text?`<p>${esc(k.text)}</p>`:''}
+    <div class="meta"><span>${esc(k.name)} · ${date}</span>
+    <span>${k.u===me.u?`<button class="like" data-del="${k.id}">Hapus</button> `:''}<button class="like ${liked?'on':''}" data-like="${k.id}">👍 ${k.likes.length}</button></span></div></div></article>`;
+  }).join('');
+  L.querySelectorAll('[data-like]').forEach(b=>b.onclick=()=>{
+    const all=store.get('rks_works',[]), k=all.find(z=>z.id==b.dataset.like); if(!k) return;
+    const i=k.likes.indexOf(me.u); i<0?k.likes.push(me.u):k.likes.splice(i,1);
+    store.set('rks_works',all); renderWorks();
+  });
+  L.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+    if(!confirm('Hapus karya ini?')) return;
+    store.set('rks_works',store.get('rks_works',[]).filter(z=>z.id!=b.dataset.del)); renderWorks();
+  });
+}
+
+/* ===== Sesi: tetap masuk seperti web lain ===== */
+const s=store.get('rks_session',null), users=store.get('rks_users',{});
+if(s&&users[s]) enter(s,users[s].name);
+})();
+</script>
+</body>
+</html>
+  
